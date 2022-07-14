@@ -71,10 +71,62 @@ void book::buybook()
     }
 }
 
-int book::searchbook(char tbuy[50],char abuy[50] ){}
+int book::searchbook(char tbuy[50], char abuy[20])
+{
+    if(strcmp(tbuy, title) == 0 && strcmp(abuy, author) == 0)
+        return 1;
+    else
+        return 0;
+}
 
 int main()
 {
-    cout << "Hello world!" << endl;
+    book *B[50];
+    int i = 0, r, j, choice;
+    char abuy[20], tbuy[50];
+
+    while(1){
+        cout << "\n\nMain Menu";
+        cout << "\n 1. Create a New Book";
+        cout << "\n 2. Search for a Book";
+        cout << "\n 3. Edit Book Details";
+        cout << "\n 4. Buy a Book";
+        cout << "\n 5. Exit";
+        cout << "\n\n Enter Your Choice to Proceed" << endl;
+        cin >> choice;
+
+        switch(choice)
+        {
+        case 1:
+            B[i] = new book;
+            B[i]->createbook();
+            i ++;
+            break;
+        case 2:
+            cin.ignore();
+            cout << "Enter Book Title: "; cin.getline(tbuy, 50);
+            cout << "Enter Book Author: "; cin.getline(abuy, 20);
+
+            for(j = 0; j < i; j ++)
+            {
+                if(B[j]->searchbook(abuy, tbuy))
+                {
+                    cout << "\n Book found successfully!";
+                    B[j]->showbook();
+                    break;
+                }
+            }
+
+            if(j == 1)
+            {
+                cout << "\n This book was not found in stock!";
+                break;
+            }
+
+        default:
+            cout << "Invalid choice was entered!";
+        }
+    }
+
     return 0;
 }
